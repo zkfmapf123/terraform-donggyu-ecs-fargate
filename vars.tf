@@ -20,7 +20,7 @@ variable "ecs_attr" {
     ecs_hard_mem     = 512
     ecs_image_arn    = "public.ecr.aws/p2t6u4a0/zent-utils:latest"
     ecs_os_system    = "LINUX"
-    ecs_architecture = "arm64"
+    ecs_arch = "arm64"
     ecs_cluster      = ""
   }
 }
@@ -35,6 +35,7 @@ variable "ecs_network_attr" {
     ecs_vpc_id           = ""
     ecs_443_listener_arn = ""
     ecs_priority         = 0
+    ecs_host_header = []
   }
 }
 
@@ -49,7 +50,7 @@ variable "ecs_health_check" {
     unhealthy_threshold  = 3
     matcher              = "200-301"
     timeout              = 30
-    internal             = 40 ## greater than timeout
+    interval             = 40 ## greater than timeout
     deregistration_delay = 60
   }
 }
