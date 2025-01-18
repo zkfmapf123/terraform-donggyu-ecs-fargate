@@ -66,7 +66,7 @@ resource "aws_appautoscaling_policy" "ecs_target_mem" {
 }
 
 resource "aws_appautoscaling_policy" "ecs_target_req" {
-  count = lookup(var.ecs_autosacling_attr, "is_enable") ? 1 : 0
+  count = lookup(var.ecs_autosacling_attr, "is_enable") && var.is_use_alb ? 1 : 0
 
   name               = "${var.ecs_attr.ecs_name}-${var.ecs_attr.ecs_env}-AutoScaling-REQ"
   policy_type        = "TargetTrackingScaling"
@@ -77,7 +77,7 @@ resource "aws_appautoscaling_policy" "ecs_target_req" {
   target_tracking_scaling_policy_configuration {
     predefined_metric_specification {
       predefined_metric_type = lookup(local.target_metric, "req")
-      resource_label         = "${lookup(var.ecs_autosacling_attr.req, "appautoscaling_suffix")}/targetgroup/${aws_lb_target_group.ecs_tg.name}/${regex(".*targetgroup/.+/([^/]+)$",aws_lb_target_group.ecs_tg.id)[0]}"
+      resource_label         = "${lookup(var.ecs_autosacling_attr.req, "appautoscaling_suffix")}/targetgroup/${aws_lb_target_group.ecs_tg[0].name}/${regex(".*targetgroup/.+/([^/]+)$", aws_lb_target_group.ecs_tg[0].id)[0]}"
     }
 
     target_value       = lookup(var.ecs_autosacling_attr.req, "value")

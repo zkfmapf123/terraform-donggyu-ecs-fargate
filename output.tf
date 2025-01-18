@@ -15,9 +15,9 @@ output "ecs_task_def" {
 }
 
 output "ecs_tg_name" {
-  value = aws_lb_target_group.ecs_tg.name
+  value = length(aws_lb_target_group.ecs_tg) > 0 ? aws_lb_target_group.ecs_tg[0].name : ""
 }
 
 output "ecs_tg_id" {
-  value = aws_lb_target_group.ecs_tg.id
+  value = length(aws_lb_target_group.ecs_tg) > 0 ? aws_lb_target_group.ecs_tg[0].id : ""
 }

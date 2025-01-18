@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-## Description
+## Requirements
 
-- ECS Fargate를 생성하는 모듈입니다.
+No requirements.
 
 ## Providers
 
@@ -40,13 +40,14 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_ecr_attr"></a> [ecr\_attr](#input\_ecr\_attr) | n/a | `map` | <pre>{<br>  "env": "",<br>  "is_enable": true,<br>  "name": ""<br>}</pre> | no |
-| <a name="input_ecs_attr"></a> [ecs\_attr](#input\_ecs\_attr) | ecs 속성입니다 | `map` | <pre>{<br>  "ecs_architecture": "arm64",<br>  "ecs_cluster": "",<br>  "ecs_env": "",<br>  "ecs_hard_cpu": 256,<br>  "ecs_hard_mem": 512,<br>  "ecs_image_arn": "public.ecr.aws/p2t6u4a0/zent-utils:latest",<br>  "ecs_name": "",<br>  "ecs_os_system": "LINUX",<br>  "ecs_port": 3000<br>}</pre> | no |
-| <a name="input_ecs_autosacling_attr"></a> [ecs\_autosacling\_attr](#input\_ecs\_autosacling\_attr) | (Optional) AutoScaling 옵션입니다 | `map` | <pre>{<br>  "as_range": [<br>    1,<br>    10<br>  ],<br>  "cpu": {<br>    "in_cooldown": 300,<br>    "out_cooldown": 300,<br>    "value": 60<br>  },<br>  "is_enable": false,<br>  "mem": {<br>    "in_cooldown": 300,<br>    "out_cooldown": 300,<br>    "value": 70<br>  },<br>  "req": {<br>    "appautoscaling_suffix": "",<br>    "in_cooldown": 300,<br>    "out_cooldown": 300,<br>    "value": 10000<br>  }<br>}</pre> | no |
-| <a name="input_ecs_health_check"></a> [ecs\_health\_check](#input\_ecs\_health\_check) | ecs tg에 heatlhcheck 속성입니다 | `map` | <pre>{<br>  "deregistration_delay": 60,<br>  "healthy_threshold": 3,<br>  "internal": 40,<br>  "matcher": "200-301",<br>  "path": "/ping",<br>  "port": 3000,<br>  "protocol": "HTTP",<br>  "timeout": 30,<br>  "unhealthy_threshold": 3<br>}</pre> | no |
-| <a name="input_ecs_network_attr"></a> [ecs\_network\_attr](#input\_ecs\_network\_attr) | ecs에 네트워크 속성입니다 | `map` | <pre>{<br>  "ecs_443_listener_arn": "",<br>  "ecs_is_public_ip": false,<br>  "ecs_priority": 0,<br>  "ecs_sg_ids": [],<br>  "ecs_subnet_ids": [],<br>  "ecs_vpc_id": ""<br>}</pre> | no |
-| <a name="input_execution_role_attr"></a> [execution\_role\_attr](#input\_execution\_role\_attr) | ECS의 실행역할 입니다. | `map` | <pre>{<br>  "name": "",<br>  "policy": {}<br>}</pre> | no |
-| <a name="input_task_role_attr"></a> [task\_role\_attr](#input\_task\_role\_attr) | ECS Task 실행역할 입니다. (실질적인 Resource 접근 허용 / 거부 정책) | `map` | <pre>{<br>  "name": "",<br>  "policy": {}<br>}</pre> | no |
+| <a name="input_ecr_attr"></a> [ecr\_attr](#input\_ecr\_attr) | n/a | `map` | <pre>{<br/>  "env": "",<br/>  "is_enable": true,<br/>  "name": ""<br/>}</pre> | no |
+| <a name="input_ecs_attr"></a> [ecs\_attr](#input\_ecs\_attr) | ecs 속성입니다 | `map` | <pre>{<br/>  "ecs_architecture": "ARM64",<br/>  "ecs_cluster": "",<br/>  "ecs_env": "",<br/>  "ecs_hard_cpu": 256,<br/>  "ecs_hard_mem": 512,<br/>  "ecs_image_arn": "public.ecr.aws/p2t6u4a0/zent-utils:latest",<br/>  "ecs_name": "",<br/>  "ecs_os_system": "LINUX",<br/>  "ecs_port": 3000<br/>}</pre> | no |
+| <a name="input_ecs_autosacling_attr"></a> [ecs\_autosacling\_attr](#input\_ecs\_autosacling\_attr) | (Optional) AutoScaling 옵션입니다 | `map` | <pre>{<br/>  "as_range": [<br/>    1,<br/>    10<br/>  ],<br/>  "cpu": {<br/>    "in_cooldown": 300,<br/>    "out_cooldown": 300,<br/>    "value": 60<br/>  },<br/>  "is_enable": false,<br/>  "mem": {<br/>    "in_cooldown": 300,<br/>    "out_cooldown": 300,<br/>    "value": 70<br/>  },<br/>  "req": {<br/>    "appautoscaling_suffix": "",<br/>    "in_cooldown": 300,<br/>    "out_cooldown": 300,<br/>    "value": 10000<br/>  }<br/>}</pre> | no |
+| <a name="input_ecs_health_check"></a> [ecs\_health\_check](#input\_ecs\_health\_check) | ecs tg에 heatlhcheck 속성입니다 | `map` | <pre>{<br/>  "deregistration_delay": 60,<br/>  "healthy_threshold": 3,<br/>  "interval": 40,<br/>  "matcher": "200-301",<br/>  "path": "/ping",<br/>  "port": 3000,<br/>  "protocol": "HTTP",<br/>  "timeout": 30,<br/>  "unhealthy_threshold": 3<br/>}</pre> | no |
+| <a name="input_ecs_network_attr"></a> [ecs\_network\_attr](#input\_ecs\_network\_attr) | ecs에 네트워크 속성입니다 | `map` | <pre>{<br/>  "ecs_443_listener_arn": "",<br/>  "ecs_host_header": [],<br/>  "ecs_is_public_ip": false,<br/>  "ecs_priority": 0,<br/>  "ecs_sg_ids": [],<br/>  "ecs_subnet_ids": [],<br/>  "ecs_vpc_id": ""<br/>}</pre> | no |
+| <a name="input_execution_role_attr"></a> [execution\_role\_attr](#input\_execution\_role\_attr) | ECS의 실행역할 입니다. | `map` | <pre>{<br/>  "name": "",<br/>  "policy": {}<br/>}</pre> | no |
+| <a name="input_is_use_alb"></a> [is\_use\_alb](#input\_is\_use\_alb) | ALB 사용 여부 | `bool` | `true` | no |
+| <a name="input_task_role_attr"></a> [task\_role\_attr](#input\_task\_role\_attr) | ECS Task 실행역할 입니다. (실질적인 Resource 접근 허용 / 거부 정책) | `map` | <pre>{<br/>  "name": "",<br/>  "policy": {}<br/>}</pre> | no |
 
 ## Outputs
 

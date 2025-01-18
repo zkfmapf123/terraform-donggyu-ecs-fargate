@@ -48,7 +48,7 @@ resource "aws_ecs_task_definition" "task_def" {
 
   runtime_platform {
     operating_system_family = lookup(var.ecs_attr, "ecs_os_system")
-    cpu_architecture        = lookup(var.ecs_attr, "ecs_arch")
+    cpu_architecture        = lookup(var.ecs_attr, "ecs_architecture")
   }
 
   lifecycle {
@@ -62,6 +62,8 @@ resource "aws_ecs_task_definition" "task_def" {
 
 #################################### Target Group + Listener Rule ####################################
 resource "aws_lb_target_group" "ecs_tg" {
+  count = var.is_use_alb ? 1 : 0
+
   name        = "${var.ecs_attr.ecs_name}-${var.ecs_attr.ecs_env}-tg"
   port        = lookup(var.ecs_attr, "ecs_port")
   protocol    = "HTTP"
@@ -84,12 +86,14 @@ resource "aws_lb_target_group" "ecs_tg" {
 }
 
 resource "aws_lb_listener_rule" "ecs_listener_rule" {
+  count = var.is_use_alb ? 1 : 0
+
   listener_arn = lookup(var.ecs_network_attr, "ecs_443_listener_arn")
   priority     = lookup(var.ecs_network_attr, "ecs_priority")
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.ecs_tg.arn
+    target_group_arn = aws_lb_target_group.ecs_tg[0].arn
   }
 
   condition {
@@ -127,10 +131,13 @@ resource "aws_ecs_service" "ecs_svc" {
     security_groups  = lookup(var.ecs_network_attr, "ecs_sg_ids")
   }
 
-  load_balancer {
-    target_group_arn = aws_lb_target_group.ecs_tg.arn
-    container_name   = "${var.ecs_attr.ecs_name}-${var.ecs_attr.ecs_env}-svc"
-    container_port   = lookup(var.ecs_attr, "ecs_port")
+  dynamic "load_balancer" {
+    for_each = var.is_use_alb ? [1] : []
+    content {
+      target_group_arn = aws_lb_target_group.ecs_tg[0].arn
+      container_name   = "${var.ecs_attr.ecs_name}-${var.ecs_attr.ecs_env}-svc"
+      container_port   = lookup(var.ecs_attr, "ecs_port")
+    }
   }
 
   deployment_circuit_breaker {

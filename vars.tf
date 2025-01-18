@@ -20,9 +20,14 @@ variable "ecs_attr" {
     ecs_hard_mem     = 512
     ecs_image_arn    = "public.ecr.aws/p2t6u4a0/zent-utils:latest"
     ecs_os_system    = "LINUX"
-    ecs_arch = "arm64"
+    ecs_architecture = "ARM64" // ARM64, X86_64
     ecs_cluster      = ""
   }
+}
+
+variable "is_use_alb" {
+  description = "ALB 사용 여부"
+  default     = true
 }
 
 variable "ecs_network_attr" {
@@ -35,7 +40,7 @@ variable "ecs_network_attr" {
     ecs_vpc_id           = ""
     ecs_443_listener_arn = ""
     ecs_priority         = 0
-    ecs_host_header = []
+    ecs_host_header      = []
   }
 }
 
